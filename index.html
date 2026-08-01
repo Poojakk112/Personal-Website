@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pooja K Kochalapurmath — Full-Stack Developer</title>
+<meta name="description" content="Portfolio of Pooja K Kochalapurmath — Full-Stack Developer specializing in NestJS, Spring Boot, React and PostgreSQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1520;
+    --bg-panel:#141C2B;
+    --bg-panel-raised:#182137;
+    --line:#293449;
+    --line-soft:#1E283C;
+    --accent:#5FE1C4;
+    --accent-dim:#5FE1C433;
+    --amber:#E8B44C;
+    --amber-dim:#E8B44C26;
+    --text:#EDF1F7;
+    --text-muted:#8B96AA;
+    --text-faint:#5B6478;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --radius: 3px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:0.35;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{color:inherit;text-decoration:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:20;
+    background:rgba(15,21,32,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:920px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--mono); font-size:13px;
+  }
+  .nav-brand{color:var(--text); font-weight:600; letter-spacing:0.02em;}
+  .nav-brand span{color:var(--accent);}
+  .nav-links{display:flex; gap:4px; flex-wrap:wrap;}
+  .nav-links a{
+    color:var(--text-muted); padding:6px 10px; border-radius:var(--radius);
+    transition:color 0.15s, background 0.15s;
+    white-space:nowrap;
+  }
+  .nav-links a:hover{color:var(--accent); background:var(--accent-dim);}
+  .method{color:var(--amber); font-weight:600;}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:64px 0 48px;}
+  .status-line{
+    font-family:var(--mono); font-size:12px; color:var(--accent);
+    display:flex; align-items:center; gap:8px; margin-bottom:24px;
+  }
+  .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent);}
+
+  .hero-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:start;}
+  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .hero h1{
+    font-family:var(--sans); font-weight:700;
+    font-size:clamp(28px,4.2vw,40px);
+    line-height:1.15; letter-spacing:-0.01em;
+    margin-bottom:12px;
+  }
+  .hero .role{
+    font-family:var(--mono); color:var(--amber); font-size:15px; margin-bottom:20px;
+  }
+  .hero p.bio{color:var(--text-muted); font-size:15px; max-width:46ch; margin-bottom:24px;}
+
+  .hero-links{display:flex; gap:10px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:12.5px; padding:9px 14px;
+    border:1px solid var(--line); border-radius:var(--radius);
+    color:var(--text); transition:all 0.15s;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent); background:var(--accent-dim);}
+  .btn.primary{background:var(--accent); color:#0F1520; border-color:var(--accent); font-weight:600;}
+  .btn.primary:hover{background:transparent; color:var(--accent);}
+
+  /* JSON panel */
+  .json-panel{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:6px;
+    overflow:hidden;
+  }
+  .json-head{
+    display:flex; align-items:center; gap:8px; padding:10px 14px;
+    border-bottom:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--text-faint);
+  }
+  .json-head .traffic{display:flex; gap:6px;}
+  .json-head .traffic span{width:8px; height:8px; border-radius:50%; background:var(--line);}
+  .json-body{
+    font-family:var(--mono); font-size:12.5px; padding:18px 16px; color:var(--text-muted);
+    white-space:pre; overflow-x:auto; min-height:220px;
+  }
+  .json-body .key{color:#7FB8E0;}
+  .json-body .str{color:var(--accent);}
+  .json-body .num{color:var(--amber);}
+  .cursor{display:inline-block; width:7px; height:14px; background:var(--accent); vertical-align:middle; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:56px 0; border-top:1px solid var(--line);}
+  .section-head{
+    display:flex; align-items:baseline; gap:12px; margin-bottom:32px; flex-wrap:wrap;
+  }
+  .endpoint{
+    font-family:var(--mono); font-size:12px; color:var(--text-faint);
+  }
+  .endpoint .m{color:var(--amber); font-weight:600;}
+  h2{
+    font-family:var(--sans); font-size:22px; font-weight:700; letter-spacing:-0.01em;
+  }
+
+  /* about */
+  .about-body{color:var(--text-muted); font-size:15px; max-width:66ch;}
+  .about-body p + p{margin-top:14px;}
+  .edu-card{
+    margin-top:24px; padding:16px 18px; background:var(--bg-panel); border:1px solid var(--line); border-radius:6px;
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:14px;
+  }
+  .edu-card .school{font-weight:600; color:var(--text);}
+  .edu-card .meta{color:var(--text-faint); font-family:var(--mono); font-size:12px;}
+
+  /* experience */
+  .exp-item{
+    position:relative; padding-left:24px; margin-bottom:32px; border-left:1px solid var(--line);
+  }
+  .exp-item:last-child{margin-bottom:0;}
+  .exp-item::before{
+    content:''; position:absolute; left:-4.5px; top:4px; width:8px; height:8px;
+    border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--bg);
+  }
+  .exp-item.past::before{background:var(--text-faint);}
+  .exp-top{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:6px;}
+  .exp-role{font-weight:600; font-size:15.5px;}
+  .exp-company{color:var(--accent); font-family:var(--mono); font-size:13px;}
+  .exp-date{font-family:var(--mono); font-size:12px; color:var(--text-faint); white-space:nowrap;}
+  .exp-desc{color:var(--text-muted); font-size:14px; max-width:64ch; margin-bottom:10px;}
+  .tag-row{display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{
+    font-family:var(--mono); font-size:11px; color:var(--text-muted);
+    border:1px solid var(--line); padding:3px 8px; border-radius:var(--radius);
+    background:var(--bg-panel);
+  }
+
+  /* projects */
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:700px){ .proj-grid{grid-template-columns:1fr;} }
+  .proj-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:6px;
+    padding:20px; display:flex; flex-direction:column; gap:10px;
+    transition:border-color 0.15s, transform 0.15s;
+  }
+  .proj-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .proj-card.featured{grid-column:1 / -1; background:var(--bg-panel-raised);}
+  .proj-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .proj-title{font-weight:600; font-size:15.5px;}
+  .status-chip{
+    font-family:var(--mono); font-size:10.5px; color:var(--accent);
+    border:1px solid var(--accent); padding:2px 7px; border-radius:20px; white-space:nowrap;
+  }
+  .proj-desc{color:var(--text-muted); font-size:13.5px;}
+  .proj-links{display:flex; gap:14px; font-family:var(--mono); font-size:12px; margin-top:auto; padding-top:4px;}
+  .proj-links a{color:var(--text-faint); border-bottom:1px solid transparent;}
+  .proj-links a:hover{color:var(--accent); border-color:var(--accent);}
+
+  /* skills */
+  .skill-groups{display:grid; grid-template-columns:1fr 1fr; gap:24px 40px;}
+  @media (max-width:700px){ .skill-groups{grid-template-columns:1fr;} }
+  .skill-group .label{
+    font-family:var(--mono); font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px;
+  }
+  .skill-list{display:flex; flex-wrap:wrap; gap:7px;}
+  .skill-pill{
+    font-family:var(--mono); font-size:12px; padding:5px 10px; border-radius:var(--radius);
+    background:var(--bg-panel); border:1px solid var(--line); color:var(--text);
+  }
+
+  /* certifications */
+  .cert-list{display:flex; flex-direction:column; gap:10px;}
+  .cert-item{
+    display:flex; align-items:baseline; gap:12px; font-size:14px; color:var(--text-muted);
+    padding:10px 0; border-bottom:1px solid var(--line-soft);
+  }
+  .cert-item:last-child{border-bottom:none;}
+  .cert-item::before{content:'✓'; color:var(--accent); font-family:var(--mono); font-weight:700;}
+
+  /* contact */
+  .contact-panel{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:6px; padding:28px;
+    display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
+  }
+  .contact-panel h3{font-size:18px; margin-bottom:6px;}
+  .contact-panel p{color:var(--text-muted); font-size:14px;}
+  .contact-links{display:flex; gap:10px; flex-wrap:wrap;}
+
+  footer{
+    padding:28px 0 40px; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">pooja<span>.</span>dev</div>
+    <div class="nav-links">
+      <a href="#about"><span class="method">GET</span> /about</a>
+      <a href="#experience"><span class="method">GET</span> /experience</a>
+      <a href="#projects"><span class="method">GET</span> /projects</a>
+      <a href="#skills"><span class="method">GET</span> /skills</a>
+      <a href="#contact"><span class="method">POST</span> /contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="status-line"><span class="dot"></span> 200 OK — open to work</div>
+    <div class="hero-grid">
+      <div>
+        <h1>Pooja K Kochalapurmath</h1>
+        <div class="role">Full-Stack Developer — NestJS · Spring Boot · React · PostgreSQL</div>
+        <p class="bio">I build REST APIs and full-stack systems that hold up under real use — currently shipping a healthcare scheduling platform at PearlThoughts, with a side interest in applying Python and deep learning to biomedical imaging.</p>
+        <div class="hero-links">
+          <a class="btn primary" href="mailto:kkpooja112@gmail.com">Email me</a>
+          <a class="btn" href="https://github.com/Poojakk112" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="https://linkedin.com/in/pooja-k-kochalapurmath" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+      <div class="json-panel">
+        <div class="json-head">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          GET /pooja-kochalapurmath
+        </div>
+        <div class="json-body" id="jsonOut"></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-head">
+      <div class="endpoint"><span class="m">GET</span> /about</div>
+      <h2>About</h2>
+    </div>
+    <div class="about-body">
+      <p>I'm a full-stack developer based in Bengaluru, currently interning as a Backend Developer at PearlThoughts, where I'm building Schedula — a production healthcare appointment scheduling system using NestJS, TypeScript, and PostgreSQL. My core stack is backend-leaning (NestJS, Spring Boot, PostgreSQL, REST APIs), with working experience across React, Next.js, and Redux on the frontend.</p>
+      <p>Outside of backend work, I've built a computer vision project — a CNN-based white blood cancer detection system with 97% accuracy and Grad-CAM interpretability — presented at the 48th KSCST Student Project Program, backed by the Dept. of Science &amp; Technology (Govt. of India &amp; Karnataka) and ART-Park (IISc). I enjoy the parts of engineering that involve debugging something down to the real cause, whether that's an auth bug in an API or a misclassified pixel region in a model.</p>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="school">B.E., Artificial Intelligence and Data Science</div>
+        <div class="meta">Angadi Institute of Technology and Management, Belagavi</div>
+      </div>
+      <div class="meta">Dec 2021 – Jun 2025 · CGPA 7.6</div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <div class="endpoint"><span class="m">GET</span> /experience</div>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-top">
+        <div>
+          <div class="exp-role">Backend Developer Intern</div>
+          <div class="exp-company">PearlThoughts · Remote</div>
+        </div>
+        <div class="exp-date">Jun 2026 — Present</div>
+      </div>
+      <p class="exp-desc">Building Schedula, a healthcare appointment scheduling system. Developed doctor/patient onboarding APIs and time-based booking-window logic, plus an automated reminder system using scheduled cron jobs. Resolved entity-mapping and auth-guard issues while testing end-to-end with Postman.</p>
+      <div class="tag-row">
+        <span class="tag">NestJS</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">TypeORM</span><span class="tag">JWT</span>
+      </div>
+    </div>
+
+    <div class="exp-item past">
+      <div class="exp-top">
+        <div>
+          <div class="exp-role">Java Full Stack Developer Intern</div>
+          <div class="exp-company">JSpiders, BTM · Bengaluru</div>
+        </div>
+        <div class="exp-date">2025</div>
+      </div>
+      <p class="exp-desc">Developed and tested RESTful APIs using Spring Boot and Postman. Gained hands-on experience in backend development, debugging, and integrating frontend and backend modules in real-time web applications.</p>
+      <div class="tag-row">
+        <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">REST APIs</span><span class="tag">Postman</span>
+      </div>
+    </div>
+
+    <div class="exp-item past">
+      <div class="exp-top">
+        <div>
+          <div class="exp-role">Web Application Development Intern</div>
+          <div class="exp-company">Rooman Technologies · Bengaluru</div>
+        </div>
+        <div class="exp-date">2025</div>
+      </div>
+      <p class="exp-desc">Worked on feature implementation and debugging across web application modules, with practical exposure to Agile development practices and sprint workflows.</p>
+      <div class="tag-row">
+        <span class="tag">Core Java</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Agile</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <div class="endpoint"><span class="m">GET</span> /projects</div>
+      <h2>Featured projects</h2>
+    </div>
+    <div class="proj-grid">
+
+      <div class="proj-card featured">
+        <div class="proj-top">
+          <div class="proj-title">Schedula — Doctor Appointment Booking System</div>
+          <div class="status-chip">200 shipped</div>
+        </div>
+        <p class="proj-desc">Full-stack backend for managing doctor availability and appointment booking. JWT auth with role-based access, stream/wave scheduling strategies, a 30-minute cutoff rule for cancellations, and automatic next-available-slot suggestions. Deployed on Render with Neon PostgreSQL.</p>
+        <div class="tag-row">
+          <span class="tag">NestJS</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">TypeORM</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/Poojakk112/schedula-pooja" target="_blank" rel="noopener">Source →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-title">AI-First CRM — HCP Module</div>
+          <div class="status-chip">200 shipped</div>
+        </div>
+        <p class="proj-desc">AI-first CRM for healthcare reps to log HCP interactions via form or plain-language chat. A LangGraph agent (Groq LLM) auto-enriches each entry — extracting entities, summarizing, and suggesting next actions.</p>
+        <div class="tag-row">
+          <span class="tag">React</span><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">Python</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/Poojakk112/ai-first-crm-hcp" target="_blank" rel="noopener">Source →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-title">Blood Cell Classification (CNN + Grad-CAM)</div>
+          <div class="status-chip">81% test acc</div>
+        </div>
+        <p class="proj-desc">4-class blood cell classifier using a fine-tuned ResNet18 on ~10k microscopy images. Diagnosed a train/test domain shift and improved test accuracy from 70% to 81% via targeted augmentation and TTA ensembling. Grad-CAM confirms predictions are driven by the correct cell region.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">CNN</span><span class="tag">Grad-CAM</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/Poojakk112/blood-cell-classification-cnn" target="_blank" rel="noopener">Source →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-title">White Blood Cancer Detection from Bone Marrow</div>
+          <div class="status-chip">97% accuracy</div>
+        </div>
+        <p class="proj-desc">CNN-based system to detect white blood cancer from microscopy images, with Grad-CAM visualization for clinical interpretability. Presented at the 48th KSCST Student Project Program, JNNCE, Shivamogga.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">CNN</span><span class="tag">React</span><span class="tag">Grad-CAM</span>
+        </div>
+        <div class="proj-links">
+          <span style="color:var(--text-faint)">Exhibited — KSCST SPP 48</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-title">Chess Tournament Management System</div>
+          <div class="status-chip">200 shipped</div>
+        </div>
+        <p class="proj-desc">Full CRUD for players and tournaments, randomized match pairing via Fisher–Yates shuffle, and live tournament rankings. Handles edge cases like blocking deletion of players with existing match history.</p>
+        <div class="tag-row">
+          <span class="tag">SvelteKit</span><span class="tag">Prisma</span><span class="tag">PostgreSQL</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://chess-tournament-app-bice.vercel.app/" target="_blank" rel="noopener">Live demo →</a>
+          <a href="https://github.com/Poojakk112/chess-tournament-app" target="_blank" rel="noopener">Source →</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-title">HawkStack — Secure REST API</div>
+          <div class="status-chip">200 shipped</div>
+        </div>
+        <p class="proj-desc">Secure REST API with JWT-based registration and login, layered Controller/Service/Repository/DTO architecture, and secured CRUD endpoints including file and video upload handling.</p>
+        <div class="tag-row">
+          <span class="tag">Java</span><span class="tag">Spring Security</span><span class="tag">Hibernate</span><span class="tag">MySQL</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/Poojakk112/HawkStack-Secure-API" target="_blank" rel="noopener">Source →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <div class="endpoint"><span class="m">GET</span> /skills</div>
+      <h2>Stack</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <div class="label">Languages</div>
+        <div class="skill-list">
+          <span class="skill-pill">Java</span><span class="skill-pill">Python</span><span class="skill-pill">JavaScript</span><span class="skill-pill">TypeScript</span><span class="skill-pill">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Backend</div>
+        <div class="skill-list">
+          <span class="skill-pill">NestJS</span><span class="skill-pill">Spring Boot</span><span class="skill-pill">FastAPI</span><span class="skill-pill">Node.js / Express</span><span class="skill-pill">TypeORM</span><span class="skill-pill">Hibernate</span><span class="skill-pill">JWT</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Frontend</div>
+        <div class="skill-list">
+          <span class="skill-pill">React.js</span><span class="skill-pill">Next.js</span><span class="skill-pill">Redux Toolkit</span><span class="skill-pill">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Data &amp; ML</div>
+        <div class="skill-list">
+          <span class="skill-pill">PostgreSQL</span><span class="skill-pill">MySQL</span><span class="skill-pill">PyTorch</span><span class="skill-pill">CNNs</span><span class="skill-pill">Grad-CAM</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Tools</div>
+        <div class="skill-list">
+          <span class="skill-pill">Git</span><span class="skill-pill">Postman</span><span class="skill-pill">Maven</span><span class="skill-pill">Jest</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Concepts</div>
+        <div class="skill-list">
+          <span class="skill-pill">REST API Design</span><span class="skill-pill">Agile / SDLC</span><span class="skill-pill">OOP</span><span class="skill-pill">DSA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="section-head">
+      <div class="endpoint"><span class="m">GET</span> /certifications</div>
+      <h2>Certifications</h2>
+    </div>
+    <div class="cert-list">
+      <div class="cert-item">IBM Certified — Introduction to Cloud (IBM Skills Network)</div>
+      <div class="cert-item">Java Full Stack with React.js — JSpiders Training Center</div>
+      <div class="cert-item">SQL — JSpiders Training Center</div>
+      <div class="cert-item">State-Level KSCST Project Exhibition Certificate</div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <div class="endpoint"><span class="m">POST</span> /contact</div>
+      <h2>Get in touch</h2>
+    </div>
+    <div class="contact-panel">
+      <div>
+        <h3>Open to full-stack &amp; backend roles</h3>
+        <p>Bengaluru, India · kkpooja112@gmail.com · +91 9353662156</p>
+      </div>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:kkpooja112@gmail.com">Email</a>
+        <a class="btn" href="https://github.com/Poojakk112" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://linkedin.com/in/pooja-k-kochalapurmath" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    built by Pooja K Kochalapurmath · updated 2026
+  </footer>
+</div>
+
+<script>
+  const jsonOut = document.getElementById('jsonOut');
+  const raw = [
+    ['{', ''],
+    ['  "name": ', '"Pooja K Kochalapurmath",'],
+    ['  "role": ', '"Full-Stack Developer",'],
+    ['  "stack": ', '["NestJS", "React", "PostgreSQL", "Python"],'],
+    ['  "location": ', '"Bengaluru, India",'],
+    ['  "status": ', '"200 OK \u2014 open to work"'],
+    ['}', '']
+  ];
+
+  function render(){
+    let html = '';
+    raw.forEach(line => {
+      const key = line[0].replace(/"([a-zA-Z]+)":/, '<span class="key">"$1":</span>');
+      let val = line[1]
+        .replace(/"([^"]+)"/g, '<span class="str">"$1"</span>');
+      html += key + val + '\n';
+    });
+    jsonOut.innerHTML = html;
+  }
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReduced) {
+    render();
+  } else {
+    let i = 0;
+    jsonOut.innerHTML = '<span class="cursor"></span>';
+    const timer = setInterval(() => {
+      i++;
+      if (i > raw.length) {
+        clearInterval(timer);
+        render();
+        return;
+      }
+      let html = '';
+      for (let j = 0; j < i; j++){
+        const key = raw[j][0].replace(/"([a-zA-Z]+)":/, '<span class="key">"$1":</span>');
+        let val = raw[j][1].replace(/"([^"]+)"/g, '<span class="str">"$1"</span>');
+        html += key + val + '\n';
+      }
+      jsonOut.innerHTML = html + '<span class="cursor"></span>';
+    }, 220);
+  }
+</script>
+
+</body>
+</html>
