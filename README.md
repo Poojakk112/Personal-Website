@@ -4,6 +4,12 @@ My personal portfolio website, built to showcase my projects, experience, and sk
 
 🔗 **Live site:** https://pooja-kochalapurmath.netlify.app/
 
+## 📸 Screenshots
+
+| Home | Featured Projects |
+|---|---|
+| ![Portfolio home](screenshots/home.jpg) | ![Featured projects](screenshots/projects.jpg) |
+
 ## About
 
 I'm Pooja K Kochalapurmath, a full-stack developer based in Bengaluru with a backend-leaning stack (NestJS, Spring Boot, PostgreSQL, REST APIs) and working experience with React, Next.js, and Redux. This site highlights my featured projects, including:
